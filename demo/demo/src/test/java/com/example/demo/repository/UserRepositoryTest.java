@@ -31,5 +31,7 @@ public class UserRepositoryTest {
         assertThat(savedUser.getIsBanned()).isEqualTo(user.getIsBanned());
         assertThat(savedUser.getScore()).isEqualTo(user.getScore());
         assertThat(savedUser.getPassword()).isEqualTo(user.getPassword());
+
+        userRepository.delete(savedUser);
     }
 }

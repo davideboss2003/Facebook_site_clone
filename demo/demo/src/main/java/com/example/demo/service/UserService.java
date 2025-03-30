@@ -64,11 +64,16 @@ public class UserService {
         if (userOpt.isPresent()) {
             User user = userOpt.get();
 
+            // Verificăm dacă utilizatorul este banat
+            if (user.getIsBanned()) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User is banned and cannot log in.");
+            }
+
             System.out.println("Stored Hashed Password: " + user.getPassword());
             System.out.println("Password Match Result: " + passwordEncoder.matches(password, user.getPassword()));
 
             if (passwordEncoder.matches(password, user.getPassword())) {
-                return user; // e ok, returnam userul
+                return user; // Login reușit
             } else {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
             }
